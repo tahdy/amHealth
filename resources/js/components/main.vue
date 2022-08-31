@@ -31,9 +31,9 @@
                         <li><router-link class="nav-link scrollto" :to="'/'+this.lang+'/#services'" >Services</router-link></li>
                         <li><router-link class="nav-link scrollto" :to="'/'+this.lang+'/#departments'" >Departments</router-link></li>
                         <li><router-link class="nav-link scrollto" :to="'/'+this.lang+'/#doctors'" >Doctors</router-link></li>
-                        <li class="dropdown"><router-link to="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></router-link>
+                        <li class="dropdown"><router-link to="#"><span>Management</span> <i class="bi bi-chevron-down"></i></router-link>
                             <ul>
-                                <li><router-link to="#">Drop Down 1</router-link></li>
+                                <li><router-link :to="{name:'dashboard'}">Admin Panel</router-link></li>
                                 <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <li><router-link to="#">Deep Drop Down 1</router-link></li>
@@ -157,6 +157,7 @@ export default {
             title: 'How To Install Vue 3 in Laravel 8 From Scratch',
             isLoggedIn: false,
             lang:_locale,
+            user:window.Laravel.user,
 
         }
     },

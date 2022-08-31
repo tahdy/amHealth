@@ -29,6 +29,7 @@
         "@vee-validate/i18n": "^4.6.7",
         "@vee-validate/rules": "^4.6.7",
         "@vitejs/plugin-vue": "^3.0.3",
+        "@vueform/multiselect": "^2.5.2",
         "cornerstone-core": "^2.6.1",
         "cornerstone-math": "^0.1.10",
         "cornerstone-tools": "^6.0.8",

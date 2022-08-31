@@ -8,6 +8,7 @@ import services from "./components/admin/services";
 import Main from "./components/main";
 import Admin_panel from "./components/admin/admin_panel";
 import Main_content from "./components/admin/main_content";
+import dashboard from "./components/admin/dashboard";
 
 const routes = [
     {
@@ -16,6 +17,11 @@ const routes = [
         name:'admin_page',
 
         children: [
+            {
+                name: 'dashboard',
+                path:  '',
+                component: dashboard
+            },
             {
                 name: 'services',
                 path:  'services',
@@ -45,16 +51,7 @@ const routes = [
                 path:  'login',
                 component: Login
             },
-            {
-                name: 'dashboard',
-                path:  'dashboard',
-                component: admin_panel
-            },
-            {
-                name: 'services',
-                path:  'services',
-                component: services
-            },
+
             {
                 path: 'viewer',
                 name: 'viewer',

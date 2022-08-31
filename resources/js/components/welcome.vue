@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div >
        <!-- ======= Hero Section ======= -->
        <section id="hero" class="d-flex align-items-center">
            <div class="container">
@@ -12,10 +12,10 @@
        <main id="main">
 
            <!-- ======= Why Us Section ======= -->
-           <section id="why-us" class="why-us">
+           <section id="why-us" class="why-us " >
                <div class="container">
 
-                   <div class="row">
+                   <div class="row ">
                        <div class="col-lg-4 d-flex align-items-stretch">
                            <div class="content">
                                <h3>Why Choose AmHealth?</h3>
@@ -62,7 +62,7 @@
 
            <!-- ======= About Section ======= -->
            <section id="about" class="about">
-               <div class="container-fluid">
+               <div class="container">
 
                    <div class="row">
                        <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch position-relative">
@@ -149,52 +149,12 @@
                        <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
                    </div>
 
-                   <div class="row">
-                       <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                   <div class="row" v-if="services">
+                       <div v-for="(service,index) in services" class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
                            <div class="icon-box">
-                               <div class="icon"><i class="fas fa-heartbeat"></i></div>
-                               <h4><a href="">Lorem Ipsum</a></h4>
-                               <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-                           </div>
-                       </div>
-
-                       <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                           <div class="icon-box">
-                               <div class="icon"><i class="fas fa-pills"></i></div>
-                               <h4><a href="">Sed ut perspiciatis</a></h4>
-                               <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-                           </div>
-                       </div>
-
-                       <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
-                           <div class="icon-box">
-                               <div class="icon"><i class="fas fa-hospital-user"></i></div>
-                               <h4><a href="">Magni Dolores</a></h4>
-                               <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-                           </div>
-                       </div>
-
-                       <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-                           <div class="icon-box">
-                               <div class="icon"><i class="fas fa-dna"></i></div>
-                               <h4><a href="">Nemo Enim</a></h4>
-                               <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
-                           </div>
-                       </div>
-
-                       <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-                           <div class="icon-box">
-                               <div class="icon"><i class="fas fa-wheelchair"></i></div>
-                               <h4><a href="">Dele cardo</a></h4>
-                               <p>Quis consequatur saepe eligendi voluptatem consequatur dolor consequuntur</p>
-                           </div>
-                       </div>
-
-                       <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
-                           <div class="icon-box">
-                               <div class="icon"><i class="fas fa-notes-medical"></i></div>
-                               <h4><a href="">Divera don</a></h4>
-                               <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
+                               <div class="icon"><i :class="'fas '+service.icon"></i></div>
+                               <h4><a href="">{{ service.headline }}</a></h4>
+                               <p>{{ service.paragraph }}</p>
                            </div>
                        </div>
 
@@ -268,7 +228,7 @@
            </section><!-- End Appointment Section -->
 
            <!-- ======= Departments Section ======= -->
-           <section id="departments" class="departments">
+           <section id="departments" class="departments container">
                <div class="container">
 
                    <div class="section-title">
@@ -601,7 +561,7 @@
            </section><!-- End Testimonials Section -->
 
            <!-- ======= Gallery Section ======= -->
-           <section id="gallery" class="gallery">
+           <section id="gallery" class="gallery container">
                <div class="container">
 
                    <div class="section-title">
@@ -762,7 +722,28 @@
 
 <script>
 export default {
-    name: "welcome"
+    name: "welcome",
+    data(){
+        return{
+            services:[],
+            loading:true,
+            error:null,
+        }
+    },
+    mounted() {
+        this.get_services();
+    }
+
+    ,methods:{
+        get_services(){
+            axios.get('/api/getservices/')
+                .then(response => {
+                    this.services = response.data;
+                    this.loading = false;
+                }).catch((err) => this.error=err);
+            this.loading = false;
+        },
+    }
 }
 </script>
 

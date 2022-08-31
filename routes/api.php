@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\UserController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,10 +26,10 @@ Route::post('checkemail',[UserController::class, 'checkEmail']);
 Route::post('checkname',[UserController::class, 'checkName']);
 Route::post('store_file',[UserController::class, 'fileStore']);
 Route::group([ 'middleware' => 'auth:sanctum'], function () {
-   Route::get('getservices', [\App\Http\Controllers\MainController::class, 'getServices']);
-/*    Route::get('/', [BookController::class, 'index']);
-    Route::post('add', [BookController::class, 'add']);
-    Route::get('edit/{id}', [BookController::class, 'edit']);
-    Route::post('update/{id}', [BookController::class, 'update']);
-    Route::delete('delete/{id}', [BookController::class, 'delete']);*/
+   Route::get('getservices', [MainController::class, 'getServices']);
+   //Route::get('/', [BookController::class, 'index']);
+    Route::post('addservice', [MainController::class, 'addService']);
+    Route::put('editservice/{id}', [MainController::class, 'editService']);
+    //Route::post('update/{id}', [MainController::class, 'update']);
+    Route::delete('deleteservice/{id}', [MainController::class, 'delService']);
 });

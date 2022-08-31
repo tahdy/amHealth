@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Events\AddNotifications;
 use App\Models\AmService;
+use App\Models\Notification;
 use App\Models\User_notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
@@ -23,15 +25,14 @@ class MainController extends Controller
     public function addService(){
 
         $att = AmService::create([
-            'icon'=>request('user_id'),
-            'headline'=> request('date'),
-            'paragraph'=> request('alert'),
+            'icon'=>request('icon'),
+            'headline'=> request('headline'),
+            'paragraph'=> request('paragraph'),
         ]);
-        $notif=User_notification::create([
+        $notif=Notification::create([
             'message' => 'Admin Has added Service . ',
             'url' => '#',
-            'from_user_id'=>auth()->id(),
-            'to_user_id'=>auth()->id(),
+            'user_id'=>auth()->id(),
 
         ]);
         broadcast(new AddNotifications($notif))->toOthers();
@@ -39,17 +40,16 @@ class MainController extends Controller
         return response()->json(['att'=>$att,'notification'=>$notif], 200);
     }
     public function editService(){
+        $key=request('key');
+
         $att = AmService::updateOrCreate(['id'=>request('id')],[
-            'icon'=>request('user_id'),
-            'headline'=> request('date'),
-            'paragraph'=> request('alert'),
+            $key => request('name')
 
         ]);
-        $notif=User_notification::create([
+        $notif=Notification::create([
             'message' => 'Admin Has edited Service . ',
             'url' => '#',
-            'from_user_id'=>auth()->id(),
-            'to_user_id'=>auth()->id(),
+            'user_id'=>Auth::user()->id,
         ]);
         broadcast(new AddNotifications($notif))->toOthers();
 
@@ -58,11 +58,10 @@ class MainController extends Controller
     }
     public function delService(){
         AmService::where('id',request('id'))->delete();
-        $notif=User_notification::create([
+        $notif=Notification::create([
             'message' => 'Admin Has deleted Service . ',
             'url' => '#',
-            'from_user_id'=>auth()->id(),
-            'to_user_id'=>auth()->id(),
+            'user_id'=>auth()->id(),
         ]);
         broadcast(new AddNotifications($notif))->toOthers();
 

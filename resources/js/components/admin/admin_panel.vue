@@ -118,6 +118,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style >
+#app{
+    display: block !important;
+}
 </style>
