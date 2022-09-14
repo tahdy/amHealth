@@ -1,10 +1,12 @@
 <template>
-   <div >
+   <div v-if="datas['Main Section'] && !loading">
        <!-- ======= Hero Section ======= -->
        <section id="hero" class="d-flex align-items-center">
            <div class="container">
-               <h1>Welcome to AmHealth</h1>
-               <h2>We are team of talented designers making websites with Bootstrap</h2>
+               <h1 v-if="lang==='en'">{{datas['Main Section'][0].headline}}</h1>
+               <h2 v-if="lang==='en'">{{datas['Main Section'][0].paragraph}}</h2>
+               <h1 v-if="lang==='ar'">{{datas['Main Section'][0].headline_ar}}</h1>
+               <h2 v-if="lang==='ar'">{{datas['Main Section'][0].paragraph_ar}}</h2>
                <a href="#about" class="btn-get-started scrollto">Get Started</a>
            </div>
        </section><!-- End Hero -->
@@ -18,11 +20,10 @@
                    <div class="row ">
                        <div class="col-lg-4 d-flex align-items-stretch">
                            <div class="content">
-                               <h3>Why Choose AmHealth?</h3>
-                               <p>
-                                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                                   Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad corporis.
-                               </p>
+                               <h3 v-if="lang==='en'">{{datas['Why Us Section'][0].headline}}</h3>
+                               <h3 v-if=" lang==='ar'">{{datas['Why Us Section'][0].headline_ar}}</h3>
+                               <p v-if=" lang==='en'">{{datas['Why Us Section'][0].paragraph}}</p>
+                               <p v-if=" lang==='ar'">{{datas['Why Us Section'][0].paragraph_ar}}</p>
                                <div class="text-center">
                                    <a href="#" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a>
                                </div>
@@ -31,27 +32,16 @@
                        <div class="col-lg-8 d-flex align-items-stretch">
                            <div class="icon-boxes d-flex flex-column justify-content-center">
                                <div class="row">
-                                   <div class="col-xl-4 d-flex align-items-stretch">
+                                   <div class="col-xl-4 d-flex align-items-stretch" v-for="(why_paragraph,index) in why_paragraphs">
                                        <div class="icon-box mt-4 mt-xl-0">
-                                           <i class="bx bx-receipt"></i>
-                                           <h4>Corporis voluptates sit</h4>
-                                           <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+                                           <i :class="'bx bx-'+why_paragraph.icon"></i>
+                                           <h4 v-if="lang==='en'">{{why_paragraph.headline}}</h4>
+                                           <h4 v-if="lang==='ar'">{{why_paragraph.headline_ar}}</h4>
+                                           <p v-if="lang==='en'">{{why_paragraph.paragraph}}</p>
+                                           <p v-if="lang==='ar'">{{why_paragraph.paragraph_ar}}</p>
                                        </div>
                                    </div>
-                                   <div class="col-xl-4 d-flex align-items-stretch">
-                                       <div class="icon-box mt-4 mt-xl-0">
-                                           <i class="bx bx-cube-alt"></i>
-                                           <h4>Ullamco laboris ladore pan</h4>
-                                           <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
-                                       </div>
-                                   </div>
-                                   <div class="col-xl-4 d-flex align-items-stretch">
-                                       <div class="icon-box mt-4 mt-xl-0">
-                                           <i class="bx bx-images"></i>
-                                           <h4>Labore consequatur</h4>
-                                           <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
-                                       </div>
-                                   </div>
+
                                </div>
                            </div><!-- End .content-->
                        </div>
@@ -70,26 +60,22 @@
                        </div>
 
                        <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
-                           <h3>Enim quis est voluptatibus aliquid consequatur fugiat</h3>
-                           <p>Esse voluptas cumque vel exercitationem. Reiciendis est hic accusamus. Non ipsam et sed minima temporibus laudantium. Soluta voluptate sed facere corporis dolores excepturi. Libero laboriosam sint et id nulla tenetur. Suscipit aut voluptate.</p>
+                           <h3 v-if=" lang==='en'">{{datas['About Section'][0].headline}}</h3>
+                           <h3 v-if=" lang==='ar'">{{datas['About Section'][0].headline_ar}}</h3>
+                           <p v-if=" lang==='en'">{{datas['About Section'][0].paragraph}}</p>
+                           <p v-if=" lang==='ar'">{{datas['About Section'][0].paragraph_ar}}</p>
+                           <div class="icon-box" v-for="(about_paragraph,index) in about_paragraphs">
+                               <div class="icon"><i :class="'bx bx-'+about_paragraph.icon"></i></div>
+                               <h4 class="title">
+                                   <a href="" v-if="lang==='en'">{{about_paragraph.headline}}</a>
+                                   <a href="" v-if="lang==='ar'">{{about_paragraph.headline_ar}}</a>
 
-                           <div class="icon-box">
-                               <div class="icon"><i class="bx bx-fingerprint"></i></div>
-                               <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-                               <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+                               </h4>
+                               <p class="description" v-if="lang==='en'">{{about_paragraph.paragraph}}</p>
+                               <p class="description" v-if="lang==='ar'">{{about_paragraph.paragraph_ar}}</p>
+
                            </div>
 
-                           <div class="icon-box">
-                               <div class="icon"><i class="bx bx-gift"></i></div>
-                               <h4 class="title"><a href="">Nemo Enim</a></h4>
-                               <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-                           </div>
-
-                           <div class="icon-box">
-                               <div class="icon"><i class="bx bx-atom"></i></div>
-                               <h4 class="title"><a href="">Dine Pad</a></h4>
-                               <p class="description">Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut deserunt minus aut eligendi omnis</p>
-                           </div>
 
                        </div>
                    </div>
@@ -145,16 +131,24 @@
                <div class="container">
 
                    <div class="section-title">
-                       <h2>Services</h2>
-                       <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                       <h2 v-if=" lang==='en'">{{datas['Services Section'][0].headline}}</h2>
+                       <h2 v-if=" lang==='ar'">{{datas['Services Section'][0].headline_ar}}</h2>
+                       <p v-if=" lang==='en'">{{datas['Services Section'][0].paragraph}}</p>
+                       <p v-if=" lang==='ar'">{{datas['Services Section'][0].paragraph_ar}}</p>
                    </div>
 
                    <div class="row" v-if="services">
                        <div v-for="(service,index) in services" class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
                            <div class="icon-box">
-                               <div class="icon"><i :class="'fas '+service.icon"></i></div>
-                               <h4><a href="">{{ service.headline }}</a></h4>
-                               <p>{{ service.paragraph }}</p>
+                               <div class="icon"><i :class="'fas fa-'+service.icon"></i></div>
+                               <h4>
+                                   <a v-if="lang=='en'" href="">{{ service.headline }}</a>
+                                   <a v-if="lang=='ar'" href="">{{ service.headline_ar }}</a>
+
+                               </h4>
+                               <p v-if="lang=='en'">{{ service.paragraph }}</p>
+                               <p v-if="lang=='ar'">{{ service.paragraph_ar }}</p>
+
                            </div>
                        </div>
 
@@ -168,8 +162,10 @@
                <div class="container">
 
                    <div class="section-title">
-                       <h2>Make an Appointment</h2>
-                       <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                       <h2 v-if="lang==='en'">{{datas['Appointment Section'][0].headline}}</h2>
+                       <h2 v-if="lang==='ar'">{{datas['Appointment Section'][0].headline_ar}}</h2>
+                       <p v-if="lang==='en'">{{datas['Appointment Section'][0].paragraph}}</p>
+                       <p v-if="lang==='ar'">{{datas['Appointment Section'][0].paragraph_ar}}</p>
                    </div>
 
                    <form action="forms/appointment.php" method="post" role="form" class="php-email-form">
@@ -195,9 +191,7 @@
                            <div class="col-md-4 form-group mt-3">
                                <select name="department" id="department" class="form-select">
                                    <option value="">Select Department</option>
-                                   <option value="Department 1">Department 1</option>
-                                   <option value="Department 2">Department 2</option>
-                                   <option value="Department 3">Department 3</option>
+                                   <option v-for="(department,index) in departments" value="Department 1">{{ department.name }}</option>
                                </select>
                                <div class="validate"></div>
                            </div>
@@ -232,92 +226,38 @@
                <div class="container">
 
                    <div class="section-title">
-                       <h2>Departments</h2>
-                       <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                       <h2 v-if="lang==='en'">{{datas['Departments Section'][0].headline}}</h2>
+                       <h2 v-if="lang==='ar'">{{datas['Departments Section'][0].headline_ar}}</h2>
+                       <p v-if="lang==='en'">{{datas['Departments Section'][0].paragraph}}</p>
+                       <p v-if="lang==='ar'">{{datas['Departments Section'][0].paragraph_ar}}</p>
                    </div>
 
                    <div class="row gy-4">
                        <div class="col-lg-3">
                            <ul class="nav nav-tabs flex-column">
-                               <li class="nav-item">
-                                   <a class="nav-link active show" data-bs-toggle="tab" href="#tab-1">Cardiology</a>
+                               <li class="nav-item" v-for="(department,index) in departments">
+                                   <a v-if="lang==='en'" class="nav-link  " :class="{ 'active': index===0,'show': index===0, }" data-bs-toggle="tab" :href="'#tab_'+index">{{ department.name }}</a>
+                                   <a v-if="lang==='ar'" class="nav-link" :class="{ 'active': index===0,'show': index===0, }" data-bs-toggle="tab" :href="'#tab_'+index">{{ department.name_ar }}</a>
                                </li>
-                               <li class="nav-item">
-                                   <a class="nav-link" data-bs-toggle="tab" href="#tab-2">Neurology</a>
-                               </li>
-                               <li class="nav-item">
-                                   <a class="nav-link" data-bs-toggle="tab" href="#tab-3">Hepatology</a>
-                               </li>
-                               <li class="nav-item">
-                                   <a class="nav-link" data-bs-toggle="tab" href="#tab-4">Pediatrics</a>
-                               </li>
-                               <li class="nav-item">
-                                   <a class="nav-link" data-bs-toggle="tab" href="#tab-5">Eye Care</a>
-                               </li>
+
                            </ul>
                        </div>
                        <div class="col-lg-9">
                            <div class="tab-content">
-                               <div class="tab-pane active show" id="tab-1">
+                               <div class="tab-pane  " :class="{ 'active': index===0,'show': index===0, }" v-for="(department,index) in departments" :id="'tab_'+index">
                                    <div class="row gy-4">
                                        <div class="col-lg-8 details order-2 order-lg-1">
-                                           <h3>Cardiology</h3>
-                                           <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
-                                           <p>Et nobis maiores eius. Voluptatibus ut enim blanditiis atque harum sint. Laborum eos ipsum ipsa odit magni. Incidunt hic ut molestiae aut qui. Est repellat minima eveniet eius et quis magni nihil. Consequatur dolorem quaerat quos qui similique accusamus nostrum rem vero</p>
+                                           <h3 v-if="lang==='en'">{{ department.headline }}</h3>
+                                           <p v-if="lang==='en'">{{ department.paragraph }}</p>
+                                           <h3 v-if="lang==='ar'">{{ department.headline_ar }}</h3>
+                                           <p v-if="lang==='ar'">{{ department.paragraph_ar }}</p>
                                        </div>
                                        <div class="col-lg-4 text-center order-1 order-lg-2">
-                                           <img v-bind:src="'/images/departments-1.jpg'" alt="" class="img-fluid">
+                                           <img v-bind:src="department.image" alt="" class="img-fluid">
                                        </div>
                                    </div>
                                </div>
-                               <div class="tab-pane" id="tab-2">
-                                   <div class="row gy-4">
-                                       <div class="col-lg-8 details order-2 order-lg-1">
-                                           <h3>Et blanditiis nemo veritatis excepturi</h3>
-                                           <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
-                                           <p>Ea ipsum voluptatem consequatur quis est. Illum error ullam omnis quia et reiciendis sunt sunt est. Non aliquid repellendus itaque accusamus eius et velit ipsa voluptates. Optio nesciunt eaque beatae accusamus lerode pakto madirna desera vafle de nideran pal</p>
-                                       </div>
-                                       <div class="col-lg-4 text-center order-1 order-lg-2">
-                                           <img v-bind:src="'/images/departments-2.jpg'" alt="" class="img-fluid">
-                                       </div>
-                                   </div>
-                               </div>
-                               <div class="tab-pane" id="tab-3">
-                                   <div class="row gy-4">
-                                       <div class="col-lg-8 details order-2 order-lg-1">
-                                           <h3>Impedit facilis occaecati odio neque aperiam sit</h3>
-                                           <p class="fst-italic">Eos voluptatibus quo. Odio similique illum id quidem non enim fuga. Qui natus non sunt dicta dolor et. In asperiores velit quaerat perferendis aut</p>
-                                           <p>Iure officiis odit rerum. Harum sequi eum illum corrupti culpa veritatis quisquam. Neque necessitatibus illo rerum eum ut. Commodi ipsam minima molestiae sed laboriosam a iste odio. Earum odit nesciunt fugiat sit ullam. Soluta et harum voluptatem optio quae</p>
-                                       </div>
-                                       <div class="col-lg-4 text-center order-1 order-lg-2">
-                                           <img v-bind:src="'/images/departments-3.jpg'" alt="" class="img-fluid">
-                                       </div>
-                                   </div>
-                               </div>
-                               <div class="tab-pane" id="tab-4">
-                                   <div class="row gy-4">
-                                       <div class="col-lg-8 details order-2 order-lg-1">
-                                           <h3>Fuga dolores inventore laboriosam ut est accusamus laboriosam dolore</h3>
-                                           <p class="fst-italic">Totam aperiam accusamus. Repellat consequuntur iure voluptas iure porro quis delectus</p>
-                                           <p>Eaque consequuntur consequuntur libero expedita in voluptas. Nostrum ipsam necessitatibus aliquam fugiat debitis quis velit. Eum ex maxime error in consequatur corporis atque. Eligendi asperiores sed qui veritatis aperiam quia a laborum inventore</p>
-                                       </div>
-                                       <div class="col-lg-4 text-center order-1 order-lg-2">
-                                           <img v-bind:src="'/images/departments-4.jpg'" alt="" class="img-fluid">
-                                       </div>
-                                   </div>
-                               </div>
-                               <div class="tab-pane" id="tab-5">
-                                   <div class="row gy-4">
-                                       <div class="col-lg-8 details order-2 order-lg-1">
-                                           <h3>Est eveniet ipsam sindera pad rone matrelat sando reda</h3>
-                                           <p class="fst-italic">Omnis blanditiis saepe eos autem qui sunt debitis porro quia.</p>
-                                           <p>Exercitationem nostrum omnis. Ut reiciendis repudiandae minus. Omnis recusandae ut non quam ut quod eius qui. Ipsum quia odit vero atque qui quibusdam amet. Occaecati sed est sint aut vitae molestiae voluptate vel</p>
-                                       </div>
-                                       <div class="col-lg-4 text-center order-1 order-lg-2">
-                                           <img v-bind:src="'/images/departments-5.jpg'" alt="" class="img-fluid">
-                                       </div>
-                                   </div>
-                               </div>
+
                            </div>
                        </div>
                    </div>
@@ -330,9 +270,11 @@
                <div class="container">
 
                    <div class="section-title">
-                       <h2>Doctors</h2>
-                       <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-                   </div>
+                       <h2 v-if="lang==='en'">{{datas['Doctors Section'][0].headline}}</h2>
+                       <h2 v-if="lang==='ar'">{{datas['Doctors Section'][0].headline_ar}}</h2>
+                       <p v-if="lang==='en'">{{datas['Doctors Section'][0].paragraph}}</p>
+                       <p v-if=" lang==='ar'">{{datas['Doctors Section'][0].paragraph_ar}}</p>
+                        </div>
 
                    <div class="row">
 
@@ -414,56 +356,28 @@
                <div class="container">
 
                    <div class="section-title">
-                       <h2>Frequently Asked Questions</h2>
-                       <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                       <h2 v-if=" lang==='en'">{{datas['Questions Section'][0].headline}}</h2>
+                       <h2 v-if=" lang==='ar'">{{datas['Questions Section'][0].headline_ar}}</h2>
+                       <p v-if="lang==='en'">{{datas['Questions Section'][0].paragraph}}</p>
+                       <p v-if=" lang==='ar'">{{datas['Questions Section'][0].paragraph_ar}}</p>
                    </div>
 
                    <div class="faq-list">
                        <ul>
-                           <li data-aos="fade-up">
-                               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">Non consectetur a erat nam at lectus urna duis? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-                               <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
-                                   <p>
-                                       Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-                                   </p>
+                           <li data-aos="fade-up" :data-aos-delay="index+'00'" v-for="(question,index) in questions">
+                               <i class="bx bx-help-circle icon-help"></i>
+                               <a data-bs-toggle="collapse" class="collapse" :data-bs-target="'#faq-list-'+index">
+                                   <p v-if="lang==='en'">{{question.question}}</p>
+                                   <p v-if="lang==='ar'">{{question.question_ar}}</p>
+
+                                   <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                               <div :id="'faq-list-'+index" class="collapse "  :class="{ 'show': index===0, }" data-bs-parent=".faq-list">
+                                   <p v-if="lang==='en'">{{question.answer}}</p>
+                                   <p v-if="lang==='ar'">{{ question.answer_ar }}</p>
+
                                </div>
                            </li>
 
-                           <li data-aos="fade-up" data-aos-delay="100">
-                               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">Feugiat scelerisque varius morbi enim nunc? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-                               <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
-                                   <p>
-                                       Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                                   </p>
-                               </div>
-                           </li>
-
-                           <li data-aos="fade-up" data-aos-delay="200">
-                               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">Dolor sit amet consectetur adipiscing elit? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-                               <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
-                                   <p>
-                                       Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-                                   </p>
-                               </div>
-                           </li>
-
-                           <li data-aos="fade-up" data-aos-delay="300">
-                               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-                               <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
-                                   <p>
-                                       Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in.
-                                   </p>
-                               </div>
-                           </li>
-
-                           <li data-aos="fade-up" data-aos-delay="400">
-                               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-5" class="collapsed">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-                               <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
-                                   <p>
-                                       Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque.
-                                   </p>
-                               </div>
-                           </li>
 
                        </ul>
                    </div>
@@ -565,8 +479,10 @@
                <div class="container">
 
                    <div class="section-title">
-                       <h2>Gallery</h2>
-                       <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                       <h2 v-if=" lang==='en'">{{datas['Gallery Section'][0].headline}}</h2>
+                       <h2 v-if=" lang==='ar'">{{datas['Gallery Section'][0].headline_ar}}</h2>
+                       <p v-if="lang==='en'">{{datas['Gallery Section'][0].paragraph}}</p>
+                       <p v-if="lang==='ar'">{{datas['Gallery Section'][0].paragraph_ar}}</p>
                    </div>
                </div>
 
@@ -647,8 +563,10 @@
                <div class="container">
 
                    <div class="section-title">
-                       <h2>Contact</h2>
-                       <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                       <h2 v-if=" lang==='en'">{{datas['Contact Section'][0].headline}}</h2>
+                       <h2 v-if=" lang==='ar'">{{datas['Contact Section'][0].headline_ar}}</h2>
+                       <p v-if=" lang==='en'">{{datas['Contact Section'][0].paragraph}}</p>
+                       <p v-if=" lang==='ar'">{{datas['Contact Section'][0].paragraph_ar}}</p>
                    </div>
                </div>
 
@@ -726,19 +644,72 @@ export default {
     data(){
         return{
             services:[],
+            departments:[],
+            about_paragraphs:[],
+            why_paragraphs: [],
+            datas: [],
+            questions:[],
             loading:true,
             error:null,
+            lang:_locale,
         }
     },
     mounted() {
         this.get_services();
+        this.get_departments();
+        this.get_about_paragraphs();
+        this.get_why_paragraphs();
+        this.get_questions();
+        this.get_datas();
+
     }
 
     ,methods:{
+        get_datas(){
+            axios.get('/api/getpage_data/')
+                .then(response => {
+                    this.datas = response.data;
+                    console.log(this.datas['Main Section'])
+                    this.loading = false;
+                }).catch((err) => this.error=err);
+            this.loading = false;
+        },
+        get_questions(){
+            axios.get('/api/getquestions/')
+                .then(response => {
+                    this.questions = response.data;
+                    this.loading = false;
+                }).catch((err) => this.error=err);
+            this.loading = false;
+        },
+        get_why_paragraphs(){
+            axios.get('/api/getwhy_paragraphs/')
+                .then(response => {
+                    this.why_paragraphs = response.data;
+                    this.loading = false;
+                }).catch((err) => this.error=err);
+            this.loading = false;
+        },
         get_services(){
             axios.get('/api/getservices/')
                 .then(response => {
                     this.services = response.data;
+                    this.loading = false;
+                }).catch((err) => this.error=err);
+            this.loading = false;
+        },
+        get_departments(){
+            axios.get('/api/getdepartments/')
+                .then(response => {
+                    this.departments = response.data;
+                    this.loading = false;
+                }).catch((err) => this.error=err);
+            this.loading = false;
+        },
+        get_about_paragraphs(){
+            axios.get('/api/getabout_paragraphs/')
+                .then(response => {
+                    this.about_paragraphs = response.data;
                     this.loading = false;
                 }).catch((err) => this.error=err);
             this.loading = false;

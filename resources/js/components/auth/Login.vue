@@ -3,8 +3,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <div class="alert alert-danger" role="alert" v-if="error !== null">
-                    {{ error }}
+                <div class="alert alert-danger" role="alert" v-if="error_email !== null || error_pass !== null ">
+                    <p>{{ error_email }}</p>
+                   <p>{{ error_pass }}</p>
+
                 </div>
 
                 <div class="card card-default">
@@ -48,7 +50,9 @@ export default {
         return {
             email: "",
             password: "",
-            error: null,
+            error_email: null,
+            error_pass: null,
+
             lang:_locale,
         }
     },
@@ -69,8 +73,12 @@ export default {
                                 this.error = response.data.message
                             }
                         })
-                        .catch(function (error) {
-                            console.error(error);
+                        .catch(error => {
+                            if (error.response.status === 422) {
+                                this.error_email = error.response.data.errors.email[0];
+                            } else {
+                                alert('Unkown error!')
+                            }
                         });
                 })
             }

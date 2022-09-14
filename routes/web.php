@@ -27,8 +27,9 @@ Route::group([ 'prefix' => '{locale}',
 Route::group(['prefix' => '{locale}',
     'where' => ['locale' => '[a-zA-Z]{2}'],'middleware'=>['language']], function () {
     Route::get('{any}', [\App\Http\Controllers\MainController::class, 'index']);
+    Route::get('admin/{any}', [\App\Http\Controllers\MainController::class, 'index']);
+    Route::get('admin/{any}/{id}', [\App\Http\Controllers\MainController::class, 'index']);
 
 });
-
 
 

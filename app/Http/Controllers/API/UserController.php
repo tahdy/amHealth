@@ -181,6 +181,8 @@ class UserController extends Controller
     Public function register(Request $request)
     {
         $fileName = 'null';
+        $success=false;
+        $message='';
         if ($request->isMethod('post')) {
             $this->validate($request, [
                 'name' => 'required|string|max:255',
@@ -277,9 +279,10 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
+
         $credentials = [
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
         ];
 
         if (Auth::attempt($credentials)) {
@@ -355,5 +358,167 @@ class UserController extends Controller
             return response()->json(['success' => 'You have successfully uploaded "' . $file_name . '"',
                 'name'=>"/{$saved_path}{$generated_new_name}"]);
         }
+    }
+
+    /**
+     * Register
+     */
+
+    Public function addUser(Request $request)
+    {
+        $fileName = 'null';
+        $success=false;
+        $message='';
+        $notif='';
+
+        if ($request->isMethod('post')) {
+            $this->validate($request, [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'fullname' => 'required|string|max:255',
+                'fathername' => 'required|string|max:255',
+                //'image' => 'required|mimes:jpeg,bmp,png,jpg',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+
+            $pass = $request->input('password');
+
+            $age = floor((time() - strtotime($request->input('date_of_birth'))) / 32556926);
+
+
+            $user= User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'fullname' => $request->input('fullname'),
+                'fathername' => $request->input('fathername'),
+                'image' => $request->input('image'),
+                'password' => bcrypt($pass),
+                'gender' => $request->input('gender'),
+                'religion' => $request->input('religion'),
+                'admin' => $request->input('admin', 0),
+                'leader' => $request->input('leader', 0),
+                'ss_id' => $request->input('name'),
+                'date_of_birth' => $request->input('date_of_birth'),
+                'address' => $request->input('address'),
+                'age' => $age,
+                'phone' => $request->input('phone'),
+                'facebook' => $request->input('facebook'),
+                'twitter' => $request->input('twitter'),
+                'role' => $request->input('role'),
+            ]);
+
+            $notif= Notification::create([
+                'message' => $request->input('name').' Added Successfully.',
+                'url' => '#',
+                'user_id'=>auth()->id()
+
+            ]);
+            $success = true;
+            $message = 'User register successfully';
+            broadcast(new AddNotifications($notif))->toOthers();
+
+        }
+        $response = [
+            'success' => $success,
+            'message' => $message,
+        ];
+
+        return response()->json(['notification'=>$notif,'response'=>$response], 200);    }
+    Public function editUser(Request $request)
+    {
+        $fileName = 'null';
+        $success=false;
+        $message='';
+        $notif='';
+        if ($request->isMethod('put')) {
+            $this->validate($request, [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255',
+                'fullname' => 'required|string|max:255',
+                'fathername' => 'required|string|max:255',
+                //'image' => 'required|mimes:jpeg,bmp,png,jpg',
+            ]);
+            $age = floor((time() - strtotime($request->input('date_of_birth'))) / 32556926);
+            $user= User::updateOrCreate(['id'=>request('id')],[
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'fullname' => $request->input('fullname'),
+                'fathername' => $request->input('fathername'),
+                'image' => $request->input('image'),
+                'gender' => $request->input('gender'),
+                'religion' => $request->input('religion'),
+                'admin' => $request->input('admin', 0),
+                'leader' => $request->input('leader', 0),
+                'ss_id' => $request->input('name'),
+                'date_of_birth' => $request->input('date_of_birth'),
+                'address' => $request->input('address'),
+                'age' => $age,
+                'phone' => $request->input('phone'),
+                'facebook' => $request->input('facebook'),
+                'twitter' => $request->input('twitter'),
+                'role' => $request->input('role'),
+            ]);
+            $success = true;
+            $message = 'User register successfully';
+            $notif= Notification::create([
+                'message' => $request->input('name').' edited Successfully.',
+                'url' => '#',
+                'user_id'=>auth()->id()
+
+            ]);
+            broadcast(new AddNotifications($notif))->toOthers();
+
+        }
+        $response = [
+            'success' => $success,
+            'message' => $message,
+        ];
+
+
+        return response()->json(['notification'=>$notif,'response'=>$response], 200);     }
+    Public function editUserPaaword(Request $request)
+    {
+        $fileName = 'null';
+        $success=false;
+        $message='';
+        $notif='';
+        if ($request->isMethod('put')) {
+            $this->validate($request, [
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+
+            $pass = $request->input('password');
+
+            $user= User::updateOrCreate(['id'=>request('id')],[
+                'password' => $request->input('password'),
+            ]);
+            $success = true;
+            $message = 'User\'s password edited successfully';
+            $notif= Notification::create([
+                'message' => $user->name.' edited password Successfully.',
+                'url' => '#',
+                'user_id'=>auth()->id()
+
+            ]);
+            broadcast(new AddNotifications($notif))->toOthers();
+
+        }
+        $response = [
+            'success' => $success,
+            'message' => $message,
+        ];
+
+
+        return response()->json(['notification'=>$notif,'response'=>$response], 200);     }
+    public function delUser(){
+        User::where('id',request('id'))->delete();
+        $notif=Notification::create([
+            'message' => 'Admin Has deleted User . ',
+            'url' => '#',
+            'user_id'=>auth()->id(),
+        ]);
+        broadcast(new AddNotifications($notif))->toOthers();
+
+        return response()->json(['notification'=>$notif], 200);
     }
 }

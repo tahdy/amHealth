@@ -36,23 +36,6 @@
                                 </div>
                             </div>
                             <div class=" row">
-                                <label for="image" class="col-md-4 control-label">{{ __('Account type') }}</label>
-
-                                <div class="col-md-6">
-                                    <div class="form-check">
-                                        <Field class="form-check-input" type="checkbox" name="admin" v-model="admin" value="1" id="defaultCheck1" />
-                                        <label class="form-check-label" for="defaultCheck1" style="padding-right: 40px;padding-left: 10px">
-                                            {{ __('Admin') }}
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <Field class="form-check-input" type="checkbox" name="leader" v-model="leader" value="1" id="defaultCheck2" />
-                                        <label class="form-check-label" for="defaultCheck2" style="padding-right: 40px;padding-left: 10px">
-                                            {{ __('Leader') }}
-                                        </label>
-                                    </div>
-                                </div></div>
-                            <div class=" row">
                                 <label  class="col-md-4 control-label" style="padding-top: 20px">{{ __('User type')}}</label>
 
                                 <div class="col-md-6" style="padding-bottom: 17px;padding-top: 17px">
@@ -308,8 +291,6 @@ export default {
             vName:1,
             image:'',
             role:'',
-            admin:0,
-            leader:0,
             email:null,
             password:'',
             password_confirmation: '',
@@ -456,8 +437,6 @@ export default {
                         fullname: this.fullname,
                         fathername: this.fathername,
                         role: this.role,
-                        admin: this.admin,
-                        leader: this.leader,
                         email: this.email,
                         password: this.password,
                         password_confirmation: this.password_confirmation,
@@ -478,8 +457,6 @@ export default {
                             this.fathername = '';
                             this.image = '';
                             this.role = '';
-                            this.admin = 0;
-                            this.leader = 0;
                             this.email = null;
                             this.password = '';
                             this.password_confirmation = '';
@@ -552,7 +529,7 @@ export default {
                 });
         },
         removeFile: function (e) {
-            axios.delete('/quizsystem/delfile/', {params:{path: this.image}})
+            axios.delete('/api/delfile', {params:{path: this.image}})
                 .then((response) => {
                     this.image = '';
                 }).catch((err) => alert('there is an error try again,or Refresh page'));

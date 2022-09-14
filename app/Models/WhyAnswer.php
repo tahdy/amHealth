@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class WhyAnswer extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','icon', 'headline', 'paragraph'];
+    protected $fillable = ['id','icon', 'headline', 'paragraph', 'headline_ar', 'paragraph_ar'];
     public $table='why_answers';
 }

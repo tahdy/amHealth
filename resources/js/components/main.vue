@@ -73,7 +73,7 @@
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-lg-3 col-md-6 footer-contact">
+                        <div class="col-md-3 col-sm-6 col-xs-6 footer-contact">
                             <h3>AmHealth</h3>
                             <p>
                                 A108 xxx Street <br>
@@ -84,7 +84,7 @@
                             </p>
                         </div>
 
-                        <div class="col-lg-2 col-md-6 footer-links">
+                        <div class="col-md-2 col-sm-6 col-xs-6 footer-links">
                             <h4>Useful Links</h4>
                             <ul>
                                 <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
@@ -95,7 +95,7 @@
                             </ul>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 footer-links">
+                        <div class="col-md-3 col-sm-6 col-xs-6 footer-links">
                             <h4>Our Services</h4>
                             <ul>
                                 <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
@@ -106,7 +106,7 @@
                             </ul>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 footer-newsletter">
+                        <div class="col-md-4 col-sm-6 col-xs-6 footer-newsletter">
                             <h4>Join Our Newsletter</h4>
                             <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
                             <form action="" method="post">
